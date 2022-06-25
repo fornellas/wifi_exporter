@@ -1,0 +1,601 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.5.4"
+    },
+    {
+      "type": "panel",
+      "id": "heatmap",
+      "name": "Heatmap",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 2,
+  "id": null,
+  "iteration": 1656188585396,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateSpectral",
+        "exponent": 0.5,
+        "min": 0,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "heatmap": {},
+      "hideZeroBuckets": true,
+      "highlightCards": true,
+      "id": 6,
+      "legend": {
+        "show": true
+      },
+      "repeatDirection": "h",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "count by (channel)(wifi_signal_db{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n    interface=~\"$interface\",\n    frequency_band=~\"$frequency_band\",\n    channel=~\"$channel\",\n})\n# 2.4GHz\nor (label_replace(label_replace(vector(0), \"channel\", \"1\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"1\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"2\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"2\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"3\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"3\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"4\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"4\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"5\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"5\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"6\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"6\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"7\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"7\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"8\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"8\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"9\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"9\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"10\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"10\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"11\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"11\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"12\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"12\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"13\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"13\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\n# 5GHz\nor (label_replace(label_replace(vector(0), \"channel\", \"36\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"36\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"40\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"40\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"44\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"44\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"48\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"48\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"52\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"52\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"56\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"56\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"60\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"60\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"64\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"64\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"100\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"100\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"104\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"104\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"108\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"108\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"112\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"112\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"116\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"116\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"120\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"120\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"124\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"124\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"128\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"128\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )",
+          "format": "time_series",
+          "legendFormat": "{{channel}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "BSS count by Channel",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "Channel",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "middle"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (BSSID,SSID)(wifi_channel{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n    interface=~\"$interface\",\n    frequency_band=~\"$frequency_band\",\n})",
+          "format": "time_series",
+          "legendFormat": "{{SSID}} {{BSSID}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "BSS Channel",
+      "type": "timeseries"
+    },
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateSpectral",
+        "exponent": 0.5,
+        "max": -30,
+        "min": -90,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "id": 4,
+      "legend": {
+        "show": true
+      },
+      "repeatDirection": "h",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (BSSID,SSID)(wifi_signal_db{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n    interface=~\"$interface\",\n    frequency_band=~\"$frequency_band\",\n    channel=~\"$channel\",\n})",
+          "format": "time_series",
+          "legendFormat": "{{SSID}} {{BSSID}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Signal Strength by BSS",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "dB",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "middle"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": -30,
+            "axisSoftMin": -90,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dB"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "VM2B47AA2-2.4GHz 90:5c:44:79:5e:5e",
+                  "Horizon Wi-Free 92:5c:14:79:5e:5e"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by (BSSID,SSID)(wifi_signal_db{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n    interface=~\"$interface\",\n    frequency_band=~\"$frequency_band\",\n    channel=~\"$channel\",\n})",
+          "format": "time_series",
+          "legendFormat": "{{SSID}} {{BSSID}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Signal Strength by BSS",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "wifi_scan_duration_seconds{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n}",
+          "format": "time_series",
+          "legendFormat": "{{SSID}} {{BSSID}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Wifi Scan Duration",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(wifi_signal_db{job=\"wifi_exporter\"},instance)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "query": "label_values(wifi_signal_db{job=\"wifi_exporter\"},instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(wifi_signal_db{job=\"wifi_exporter\",instance=~\"$instance\"},interface)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "interface",
+        "options": [],
+        "query": {
+          "query": "label_values(wifi_signal_db{job=\"wifi_exporter\",instance=~\"$instance\"},interface)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(wifi_signal_db{job=\"wifi_exporter\",instance=~\"$instance\"},frequency_band)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "frequency_band",
+        "options": [],
+        "query": {
+          "query": "label_values(wifi_signal_db{job=\"wifi_exporter\",instance=~\"$instance\"},frequency_band)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 4,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(wifi_signal_db{job=\"wifi_exporter\",instance=~\"$instance\",frequency_band=~\"$frequency_band\"},channel)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "channel",
+        "options": [],
+        "query": {
+          "query": "label_values(wifi_signal_db{job=\"wifi_exporter\",instance=~\"$instance\",frequency_band=~\"$frequency_band\"},channel)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 4,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "2022-06-25T19:11:13.000Z",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Wifi",
+  "uid": "kkMFfAq7z",
+  "version": 32,
+  "weekStart": ""
+}
