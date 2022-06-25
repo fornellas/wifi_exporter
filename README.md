@@ -6,4 +6,4 @@ Prometheus exporter that exposes Wireless interfaces information.
 
 | Name  | Description | Labels |
 | -- | -- | -- |
-| wifi_scan | Scan result of available networks | `interface`, `BSSID`, `SSID`, `frequency_MHz`, `RSSI`, `flags` |
+| wifi_signal_db | BSS signal in dB (RSSI) | `interface`, `BSSID`, `SSID`, `frequency_MHz`, `flags` |
