@@ -3,15 +3,15 @@ package wireless
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net"
 	"os"
 	"path"
 	"path/filepath"
 	"pifke.org/wpasupplicant"
 	"reflect"
-	"time"
 	"sync"
-	"log"
+	"time"
 )
 
 var scanMutex sync.Mutex
