@@ -32,7 +32,7 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	for _, scanResult := range scanResults {
 		fmt.Fprintf(
 			w,
-			"wireless_scan{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_MHz=\"%s\",RSSI=\"%s\",flags=\"%s\"} 1\n",
+			"wifi_scan{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_MHz=\"%s\",RSSI=\"%s\",flags=\"%s\"} 1\n",
 			escape(scanResult.IfName),
 			escape(scanResult.BSSID.String()),
 			escape(scanResult.SSID),
