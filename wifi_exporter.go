@@ -292,7 +292,9 @@ func getChannel(frequency int) int {
 
 func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	log.Printf("< %s GET /metrics", req.RemoteAddr)
+	scanStartTime := time.Now()
 	scanResults, err := wireless.Scan(time.Duration(*wirelessScanTimeoutMs) * time.Millisecond)
+	scanDuration := time.Now().Sub(scanStartTime)
 	if err != nil {
 		log.Printf("> %s GET /metrics 500", req.RemoteAddr)
 		log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
@@ -301,6 +303,7 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	log.Printf("> %s GET /metrics 200", req.RemoteAddr)
+	fmt.Fprintf(w, "wifi_scan_duration_seconds %f\n", float64(scanDuration.Milliseconds())/1000.0)
 	for _, scanResult := range scanResults {
 		fmt.Fprintf(
 			w,
