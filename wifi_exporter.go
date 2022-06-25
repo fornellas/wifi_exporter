@@ -13,7 +13,7 @@ import (
 
 var (
 	address               = kingpin.Flag("server", "server address").Default(":8034").String()
-	wirelessScanTimeoutMs = kingpin.Flag("wireless.scan.timeout_ms", "wireless scan timeout in milliseconds").Default("10000").Int()
+	wirelessScanTimeoutMs = kingpin.Flag("wireless.scan.timeout_ms", "wireless scan timeout in milliseconds").Default("20000").Int()
 )
 
 func escape(s string) string {
