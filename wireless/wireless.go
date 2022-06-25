@@ -10,9 +10,14 @@ import (
 	"pifke.org/wpasupplicant"
 	"reflect"
 	"time"
+	"sync"
+	"log"
 )
 
+var scanMutex sync.Mutex
+
 func GetWirelessInterfaceNames() (ifNames []string, err error) {
+	log.Printf("Listing wireless interfaces")
 	matches, err := filepath.Glob("/sys/class/net/*")
 	if err != nil {
 		return nil, err
@@ -55,14 +60,19 @@ func Scan(timeout time.Duration) ([]ScanResult, error) {
 		return nil, fmt.Errorf("Failed to list wireless interfaces: %s", err.Error())
 	}
 
+	scanMutex.Lock()
+	defer scanMutex.Unlock()
+
 	scanResults := []ScanResult{}
 	for _, ifName := range ifNames {
+		log.Printf("WPA Supplicant connection to %s", ifName)
 		conn, err := wpasupplicant.Unixgram(ifName)
 		if err != nil {
 			return nil, fmt.Errorf("Failed to connect to WPA Supplicant %s: %s", ifName, err.Error())
 		}
 		defer conn.Close()
 
+		log.Printf("Scanning %s", ifName)
 		timeoutCh := time.After(timeout)
 		err = conn.Scan()
 		if err != nil {

@@ -21,11 +21,14 @@ func escape(s string) string {
 }
 
 func metricsHandler(w http.ResponseWriter, req *http.Request) {
+	log.Printf("< GET /metrics")
 	scanResults, err := wireless.Scan(time.Duration(*wirelessScanTimeoutMs) * time.Millisecond)
 	if err != nil {
+		log.Printf("> GET /metrics 500")
 		w.WriteHeader(500)
 		fmt.Fprintf(w, "Failed to scan: %s", err.Error())
 	}
+	log.Printf("> GET /metrics 200")
 	for _, scanResult := range scanResults {
 		fmt.Fprintf(
 			w,
