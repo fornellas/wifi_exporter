@@ -341,6 +341,8 @@ func Scan(timeout time.Duration) ([]ScanResult, error) {
 			return nil, fmt.Errorf("Failed to connect to WPA Supplicant %s: %s", ifName, err.Error())
 		}
 		defer conn.Close()
+		// ScanResults() may hang forever without this
+		conn.SetTimeout(5*time.Second)
 
 		log.Printf("Scanning %s", ifName)
 		timeoutCh := time.After(timeout)

@@ -1,0 +1,3 @@
+[submodule "golang-wpasupplicant"]
+	path = golang-wpasupplicant
+	url = git@github.com:fornellas/golang-wpasupplicant.git

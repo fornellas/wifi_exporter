@@ -12,3 +12,5 @@ require (
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/stretchr/testify v1.7.5 // indirect
 )
+
+replace pifke.org/wpasupplicant => ./golang-wpasupplicant
