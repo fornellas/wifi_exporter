@@ -20,16 +20,6 @@ func escape(s string) string {
 	return strings.ReplaceAll(s, `"`, `\"`)
 }
 
-func getFrequencyBand(frequency int) string {
-	if frequency >= 2412 && frequency <= 2484 {
-		return "2.4GHz"
-	}
-	if frequency >= 5035 && frequency <= 5980 {
-		return "5GHz"
-	}
-	return "Unknown"
-}
-
 func getChannel(frequency int) int {
 	// 2.4GHz https://en.wikipedia.org/wiki/List_of_WLAN_channels#2.4_GHz_(802.11b/g/n/ax)
 	if frequency == 2412 {
@@ -296,7 +286,6 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	scanResults, err := wireless.Scan(time.Duration(*wirelessScanTimeoutMs) * time.Millisecond)
 	scanDuration := time.Now().Sub(scanStartTime)
 	if err != nil {
-		log.Printf("> %s GET /metrics 500", req.RemoteAddr)
 		log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
 		w.WriteHeader(500)
 		fmt.Fprintf(w, "Failed to scan")
@@ -312,7 +301,7 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 			escape(scanResult.BSSID.String()),
 			escape(scanResult.SSID),
 			escape(strconv.Itoa(scanResult.Frequency)),
-			escape(getFrequencyBand(scanResult.Frequency)),
+			escape(scanResult.FrequencyBand()),
 			escape(fmt.Sprintf("%d", getChannel(scanResult.Frequency))),
 			escape(fmt.Sprintf("%s", scanResult.Flags)),
 			scanResult.RSSI,
@@ -323,7 +312,7 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 			escape(scanResult.IfName),
 			escape(scanResult.BSSID.String()),
 			escape(scanResult.SSID),
-			escape(getFrequencyBand(scanResult.Frequency)),
+			escape(scanResult.FrequencyBand()),
 			escape(fmt.Sprintf("%s", scanResult.Flags)),
 			getChannel(scanResult.Frequency),
 		)

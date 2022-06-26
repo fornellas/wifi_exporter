@@ -54,6 +54,16 @@ type ScanResult struct {
 	Flags []string
 }
 
+func (s *ScanResult)FrequencyBand() string {
+	if s.frequency >= 2412 && s.frequency <= 2484 {
+		return "2.4GHz"
+	}
+	if s.frequency >= 5035 && s.frequency <= 5980 {
+		return "5GHz"
+	}
+	return "Unknown"
+}
+
 func Scan(timeout time.Duration) ([]ScanResult, error) {
 	ifNames, err := GetWirelessInterfaceNames()
 	if err != nil {
