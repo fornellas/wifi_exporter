@@ -14,4 +14,4 @@ Prometheus exporter that exposes Wireless interfaces information.
 
 A dashboard is available [here](https://github.com/fornellas/wifi_exporter/tree/master/grafana).
 
-![Dashboard](./grafana/screenshot.png)
+![Dashboard](./grafana/dashboard.png)

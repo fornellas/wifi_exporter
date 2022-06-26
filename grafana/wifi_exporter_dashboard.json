@@ -62,12 +62,14 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 2,
   "id": null,
-  "iteration": 1656188585396,
+  "iteration": 1656236307001,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "cards": {},
+      "cards": {
+        "cardPadding": 0
+      },
       "color": {
         "cardColor": "#b4ff00",
         "colorScale": "sqrt",
@@ -103,7 +105,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "count by (channel)(wifi_signal_db{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n    interface=~\"$interface\",\n    frequency_band=~\"$frequency_band\",\n    channel=~\"$channel\",\n})\n# 2.4GHz\nor (label_replace(label_replace(vector(0), \"channel\", \"1\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"1\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"2\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"2\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"3\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"3\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"4\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"4\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"5\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"5\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"6\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"6\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"7\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"7\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"8\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"8\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"9\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"9\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"10\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"10\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"11\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"11\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"12\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"12\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"13\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"13\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\n# 5GHz\nor (label_replace(label_replace(vector(0), \"channel\", \"36\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"36\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"40\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"40\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"44\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"44\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"48\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"48\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"52\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"52\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"56\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"56\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"60\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"60\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"64\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"64\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"100\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"100\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"104\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"104\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"108\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"108\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"112\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"112\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"116\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"116\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"120\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"120\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"124\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"124\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"128\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"128\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )",
+          "expr": "count by (channel,frequency_band)(wifi_signal_db{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n    interface=~\"$interface\",\n    frequency_band=~\"$frequency_band\",\n    channel=~\"$channel\",\n})\n# 2.4GHz\nor (label_replace(label_replace(vector(0), \"channel\", \"1\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"1\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"2\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"2\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"3\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"3\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"4\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"4\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"5\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"5\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"6\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"6\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"7\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"7\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"8\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"8\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"9\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"9\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"10\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"10\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"11\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"11\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"12\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"12\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"13\", \"\", \"\"), \"frequency_band\", \"2.4GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"13\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\n# 5GHz\nor (label_replace(label_replace(vector(0), \"channel\", \"36\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"36\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"40\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"40\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"44\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"44\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"48\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"48\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"52\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"52\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"56\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"56\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"60\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"60\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"64\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"64\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"100\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"100\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"104\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"104\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"108\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"108\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"112\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"112\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"116\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"116\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"120\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"120\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"124\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"124\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )\nor (label_replace(label_replace(vector(0), \"channel\", \"128\", \"\", \"\"), \"frequency_band\", \"5GHz\", \"\", \"\") and label_replace(label_replace(vector(0), \"channel\", \"128\", \"\", \"\"), \"frequency_band\", \"$frequency_band\", \"\", \"\") )",
           "format": "time_series",
           "legendFormat": "{{channel}}",
           "range": true,
@@ -218,7 +220,9 @@
       "type": "timeseries"
     },
     {
-      "cards": {},
+      "cards": {
+        "cardPadding": 0
+      },
       "color": {
         "cardColor": "#b4ff00",
         "colorScale": "sqrt",
@@ -334,33 +338,7 @@
           },
           "unit": "dB"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "VM2B47AA2-2.4GHz 90:5c:44:79:5e:5e",
-                  "Horizon Wi-Free 92:5c:14:79:5e:5e"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -490,6 +468,99 @@
       ],
       "title": "Wifi Scan Duration",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "up{\n    job=\"wifi_exporter\",\n    instance=~\"$instance\",\n}",
+          "format": "time_series",
+          "legendFormat": "{{SSID}} {{BSSID}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Up",
+      "type": "timeseries"
     }
   ],
   "refresh": "5s",
@@ -589,13 +660,13 @@
     ]
   },
   "time": {
-    "from": "2022-06-25T19:11:13.000Z",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Wifi",
   "uid": "kkMFfAq7z",
-  "version": 32,
+  "version": 36,
   "weekStart": ""
 }
