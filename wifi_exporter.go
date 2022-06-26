@@ -13,7 +13,7 @@ import (
 
 var (
 	address               = kingpin.Flag("server", "server address").Default(":8034").String()
-	wirelessScanTimeoutMs = kingpin.Flag("wireless.scan.timeout_ms", "wireless scan timeout in milliseconds").Default("5000").Int()
+	wpaSupplicantTimeout = kingpin.Flag("wireless.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("5000").Int()
 )
 
 func escape(s string) string {
@@ -23,7 +23,7 @@ func escape(s string) string {
 func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	log.Printf("< %s GET /metrics", req.RemoteAddr)
 	scanStartTime := time.Now()
-	scanResults, err := wireless.Scan(time.Duration(*wirelessScanTimeoutMs) * time.Millisecond)
+	scanResults, err := wireless.Scan(time.Duration(*wpaSupplicantTimeout) * time.Millisecond)
 	scanDuration := time.Now().Sub(scanStartTime)
 	if err != nil {
 		log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())

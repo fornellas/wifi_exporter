@@ -342,7 +342,7 @@ func Scan(timeout time.Duration) ([]ScanResult, error) {
 		}
 		defer conn.Close()
 		// ScanResults() may hang forever without this
-		conn.SetTimeout(5*time.Second)
+		conn.SetTimeout(timeout)
 
 		log.Printf("Scanning %s", ifName)
 		timeoutCh := time.After(timeout)
