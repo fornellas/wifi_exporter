@@ -13,7 +13,7 @@ import (
 
 var (
 	address               = kingpin.Flag("server", "server address").Default(":8034").String()
-	wpaSupplicantTimeout = kingpin.Flag("wireless.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("5000").Int()
+	wpaSupplicantTimeout = kingpin.Flag("wireless.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("10000").Int()
 )
 
 func escape(s string) string {
