@@ -10,12 +10,13 @@ import (
 
 	"gopkg.in/alecthomas/kingpin.v2"
 
-	"github.com/fornellas/wifi_exporter/wireless"
+	"github.com/fornellas/wifi_exporter/internal/wpa_supplicant"
+	"github.com/fornellas/wifi_exporter/wifi"
 )
 
 var (
 	address              = kingpin.Flag("server", "server address").Default(":8034").String()
-	wpaSupplicantTimeout = kingpin.Flag("wireless.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("10000").Int()
+	wpaSupplicantTimeout = kingpin.Flag("wifi.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("10000").Int()
 )
 
 func escape(s string) string {
@@ -24,40 +25,58 @@ func escape(s string) string {
 
 func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	log.Printf("< %s GET /metrics", req.RemoteAddr)
-	scanStartTime := time.Now()
-	scanResults, err := wireless.Scan(time.Duration(*wpaSupplicantTimeout) * time.Millisecond)
-	scanDuration := time.Since(scanStartTime)
+
+	wifiClient := wpa_supplicant.NewWPASupplicant()
+
+	ifaces, err := wifiClient.GetInterfaces()
 	if err != nil {
 		log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
 		w.WriteHeader(500)
-		fmt.Fprintf(w, "Failed to scan")
+		fmt.Fprintf(w, "Failed to list interfaces")
 		return
 	}
+
+	scanResultsMap := make(map[wifi.Iface][]wifi.ScanResult)
+	scanStartTime := time.Now()
+	for _, iface := range ifaces {
+		scanResults, err := wifiClient.Scan(iface, time.Duration(*wpaSupplicantTimeout)*time.Millisecond)
+		if err != nil {
+			log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
+			w.WriteHeader(500)
+			fmt.Fprintf(w, "Failed to scan")
+			return
+		}
+		scanResultsMap[iface] = scanResults
+	}
+	scanDuration := time.Since(scanStartTime)
+
 	log.Printf("> %s GET /metrics 200", req.RemoteAddr)
 	fmt.Fprintf(w, "wifi_scan_duration_seconds %f\n", float64(scanDuration.Milliseconds())/1000.0)
-	for _, scanResult := range scanResults {
-		fmt.Fprintf(
-			w,
-			"wifi_signal_db{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_MHz=\"%s\",frequency_band=\"%s\",channel=\"%s\",flags=\"%s\"} %d\n",
-			escape(scanResult.IfName),
-			escape(scanResult.BSSID.String()),
-			escape(scanResult.SSID),
-			escape(strconv.Itoa(scanResult.Frequency)),
-			escape(scanResult.FrequencyBand()),
-			escape(fmt.Sprintf("%d", scanResult.Channel())),
-			escape(fmt.Sprintf("%s", scanResult.Flags)),
-			scanResult.RSSI,
-		)
-		fmt.Fprintf(
-			w,
-			"wifi_channel{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_band=\"%s\",flags=\"%s\"} %d\n",
-			escape(scanResult.IfName),
-			escape(scanResult.BSSID.String()),
-			escape(scanResult.SSID),
-			escape(scanResult.FrequencyBand()),
-			escape(fmt.Sprintf("%s", scanResult.Flags)),
-			scanResult.Channel(),
-		)
+	for iface, scanResultList := range scanResultsMap {
+		for _, scanResult := range scanResultList {
+			fmt.Fprintf(
+				w,
+				"wifi_signal_db{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_MHz=\"%s\",frequency_band=\"%s\",channel=\"%s\",flags=\"%s\"} %d\n",
+				escape(iface.Name()),
+				escape(scanResult.BSSID.String()),
+				escape(scanResult.SSID),
+				escape(strconv.Itoa(scanResult.Frequency)),
+				escape(scanResult.FrequencyBand()),
+				escape(fmt.Sprintf("%d", scanResult.Channel())),
+				escape(fmt.Sprintf("%s", scanResult.Flags)),
+				scanResult.RSSI,
+			)
+			fmt.Fprintf(
+				w,
+				"wifi_channel{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_band=\"%s\",flags=\"%s\"} %d\n",
+				escape(iface.Name()),
+				escape(scanResult.BSSID.String()),
+				escape(scanResult.SSID),
+				escape(scanResult.FrequencyBand()),
+				escape(fmt.Sprintf("%s", scanResult.Flags)),
+				scanResult.Channel(),
+			)
+		}
 	}
 }
 
