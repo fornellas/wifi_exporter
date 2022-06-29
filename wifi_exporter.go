@@ -4,29 +4,55 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 	"strings"
 	"time"
 
 	"gopkg.in/alecthomas/kingpin.v2"
 
+	"github.com/fornellas/wifi_exporter/internal/network_manager"
 	"github.com/fornellas/wifi_exporter/internal/wpa_supplicant"
 	"github.com/fornellas/wifi_exporter/wifi"
 )
 
 var (
-	address              = kingpin.Flag("server", "server address").Default(":8034").String()
-	wpaSupplicantTimeout = kingpin.Flag("wifi.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("10000").Int()
+	address           = kingpin.Flag("server", "server address").Default(":8034").String()
+	wifiBackend       = kingpin.Flag("wifi.backend", "Either wpa_supplicant or NetworkManager").Default("NetworkManager").String()
+	wifiScanTimeoutMs = kingpin.Flag("wifi.scan.timeout_ms", "timeout scanning for wifi networks in milliseconds").Default("10000").Int()
 )
 
 func escape(s string) string {
 	return strings.ReplaceAll(s, `"`, `\"`)
 }
 
+func getWifiClient() (wifi.Client, error) {
+	switch *wifiBackend {
+	case "NetworkManager":
+		nm, err := network_manager.NewNetworkManager()
+		if err != nil {
+			return nil, err
+		}
+		return nm, nil
+	case "wpa_supplicant":
+		return wpa_supplicant.NewWPASupplicant(), nil
+	default:
+		return nil, fmt.Errorf("Invalid wifi backend: %s", *wifiBackend)
+	}
+}
+
+func getwifiScanTimeoutDuration() time.Duration {
+	return time.Duration(*wifiScanTimeoutMs) * time.Millisecond
+}
+
 func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	log.Printf("< %s GET /metrics", req.RemoteAddr)
 
-	wifiClient := wpa_supplicant.NewWPASupplicant()
+	wifiClient, err := getWifiClient()
+	if err != nil {
+		log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
+		w.WriteHeader(500)
+		fmt.Fprintf(w, "Failed to get wifi client")
+		return
+	}
 
 	ifaces, err := wifiClient.GetInterfaces()
 	if err != nil {
@@ -39,7 +65,7 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	scanResultsMap := make(map[wifi.Iface][]wifi.ScanResult)
 	scanStartTime := time.Now()
 	for _, iface := range ifaces {
-		scanResults, err := wifiClient.Scan(iface, time.Duration(*wpaSupplicantTimeout)*time.Millisecond)
+		scanResults, err := wifiClient.Scan(iface, getwifiScanTimeoutDuration())
 		if err != nil {
 			log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
 			w.WriteHeader(500)
@@ -56,24 +82,22 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 		for _, scanResult := range scanResultList {
 			fmt.Fprintf(
 				w,
-				"wifi_signal_db{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_MHz=\"%s\",frequency_band=\"%s\",channel=\"%s\",flags=\"%s\"} %d\n",
+				"wifi_signal_db{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_MHz=\"%d\",frequency_band=\"%s\",channel=\"%s\"} %d\n",
 				escape(iface.Name()),
 				escape(scanResult.BSSID.String()),
 				escape(scanResult.SSID),
-				escape(strconv.Itoa(scanResult.Frequency)),
+				scanResult.FrequencyMHz,
 				escape(scanResult.FrequencyBand()),
 				escape(fmt.Sprintf("%d", scanResult.Channel())),
-				escape(fmt.Sprintf("%s", scanResult.Flags)),
-				scanResult.RSSI,
+				scanResult.SignalStrengthdBm,
 			)
 			fmt.Fprintf(
 				w,
-				"wifi_channel{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_band=\"%s\",flags=\"%s\"} %d\n",
+				"wifi_channel{interface=\"%s\",BSSID=\"%s\",SSID=\"%s\",frequency_band=\"%s\"} %d\n",
 				escape(iface.Name()),
 				escape(scanResult.BSSID.String()),
 				escape(scanResult.SSID),
 				escape(scanResult.FrequencyBand()),
-				escape(fmt.Sprintf("%s", scanResult.Flags)),
 				scanResult.Channel(),
 			)
 		}

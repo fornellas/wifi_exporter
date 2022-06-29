@@ -26,7 +26,7 @@ func NewWPASupplicant() WPASupplicant {
 
 var scanMutex sync.Mutex
 
-func (_ *WPASupplicant) GetInterfaces() (ifaces []wifi.Iface, err error) {
+func (_ WPASupplicant) GetInterfaces() (ifaces []wifi.Iface, err error) {
 	log.Printf("Listing wireless interfaces")
 	matches, err := filepath.Glob("/sys/class/net/*")
 	if err != nil {
@@ -47,7 +47,7 @@ func (_ *WPASupplicant) GetInterfaces() (ifaces []wifi.Iface, err error) {
 	return ifaces, nil
 }
 
-func (ws *WPASupplicant) Scan(iface wifi.Iface, timeout time.Duration) ([]wifi.ScanResult, error) {
+func (ws WPASupplicant) Scan(iface wifi.Iface, timeout time.Duration) ([]wifi.ScanResult, error) {
 	// TODO lock by interface
 	scanMutex.Lock()
 	defer scanMutex.Unlock()
@@ -94,12 +94,11 @@ func (ws *WPASupplicant) Scan(iface wifi.Iface, timeout time.Duration) ([]wifi.S
 		scanResults = append(
 			scanResults,
 			wifi.ScanResult{
-				Iface:     iface,
-				BSSID:     connScanResult.BSSID(),
-				SSID:      connScanResult.SSID(),
-				Frequency: connScanResult.Frequency(),
-				RSSI:      connScanResult.RSSI(),
-				Flags:     connScanResult.Flags(),
+				Iface:             iface,
+				BSSID:             connScanResult.BSSID(),
+				SSID:              connScanResult.SSID(),
+				FrequencyMHz:      uint32(connScanResult.Frequency()),
+				SignalStrengthdBm: connScanResult.RSSI(),
 			},
 		)
 	}
