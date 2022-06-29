@@ -8,10 +8,11 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"pifke.org/wpasupplicant"
 	"reflect"
 	"sync"
 	"time"
+
+	"pifke.org/wpasupplicant"
 )
 
 var scanMutex sync.Mutex

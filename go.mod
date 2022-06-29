@@ -1,16 +1,16 @@
 module github.com/fornellas/wifi_exporter
 
-go 1.18
+go 1.17
+
+replace pifke.org/wpasupplicant => ./golang-wpasupplicant
 
 require (
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
-	pifke.org/wpasupplicant v0.0.0-20200816231324-12bdf536389f
+	pifke.org/wpasupplicant v0.0.0-00010101000000-000000000000
 )
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
-	github.com/stretchr/testify v1.7.5 // indirect
+	github.com/stretchr/testify v1.8.0 // indirect
 )
-
-replace pifke.org/wpasupplicant => ./golang-wpasupplicant

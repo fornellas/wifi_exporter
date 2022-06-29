@@ -2,17 +2,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/fornellas/wifi_exporter/wireless"
-	"gopkg.in/alecthomas/kingpin.v2"
 	"log"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"gopkg.in/alecthomas/kingpin.v2"
+
+	"github.com/fornellas/wifi_exporter/wireless"
 )
 
 var (
-	address               = kingpin.Flag("server", "server address").Default(":8034").String()
+	address              = kingpin.Flag("server", "server address").Default(":8034").String()
 	wpaSupplicantTimeout = kingpin.Flag("wireless.wpa_supplicant.timeout_ms", "timeout when talking to WPA Supplicant in milliseconds").Default("10000").Int()
 )
 
@@ -24,7 +26,7 @@ func metricsHandler(w http.ResponseWriter, req *http.Request) {
 	log.Printf("< %s GET /metrics", req.RemoteAddr)
 	scanStartTime := time.Now()
 	scanResults, err := wireless.Scan(time.Duration(*wpaSupplicantTimeout) * time.Millisecond)
-	scanDuration := time.Now().Sub(scanStartTime)
+	scanDuration := time.Since(scanStartTime)
 	if err != nil {
 		log.Printf("> %s GET /metrics 500: %s", req.RemoteAddr, err.Error())
 		w.WriteHeader(500)
